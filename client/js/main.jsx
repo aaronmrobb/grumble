@@ -6,7 +6,6 @@ import Firebase from 'firebase'
 
 const mountNode = document.getElementById('app')
 const dataRoot = new Firebase('https://grumble.firebaseio.com/')
-let userRoot
 //
 // $('#signin').on('click', (e) => {
 //   e.preventDefault()
@@ -26,9 +25,23 @@ let userRoot
 // })
 
 const Main = React.createClass({
+  getInitialState: function() {
+    return {
+      user : ''
+    }
+  },
+  updateUser: function (user) {
+    this.setState({
+      user: user
+    })
+  },
   render: function () {
     return (
-      <Navigation />
+      <div>
+        <Navigation updateUser={this.updateUser} user={this.state.user}/>
+        <Projects user={this.state.user} />
+      </div>
+
     )
   }
 })
@@ -47,8 +60,7 @@ const Navigation = React.createClass({
             <li></li>
           </ul>
           <div className="navbar-right">
-            <Signin/>
-            <Signout/>
+            <Signin updateUser={this.props.updateUser} user={this.props.user}/>
           </div>
         </div>
       </div>
@@ -61,44 +73,60 @@ const Navigation = React.createClass({
 const Signin = React.createClass({
   getInitialState: function() {
     return {
-      status: 'show'
+      displaySignin: 'inline-block',
+      displaySignout: 'none'
     }
   },
   login: function(e) {
     e.preventDefault()
-    dataRoot.authWithOAuthPopup('github', function(error, authData) {
+    dataRoot.authWithOAuthPopup('github', (error, authData) => {
         if (error) {
           console.log("Login Failed!", error)
       } else {
-        userRoot = new Firebase('https://grumble.firebaseio.com/users/' + authData.uid)
-        console.log(authData.uid)
+        this.props.updateUser(authData.uid)
       }
     })
-    this.setState({status: 'hidden'})
-  },
-  render: function () {
-    return (
-      <button onClick={this.login} className="btn btn-success">Sign In</button>
-    )
-  }
-})
-
-const Signout = React.createClass({
-  getInitialState: function() {
-    return {
-      status: 'hidden'
-    }
+    this.setState({displaySignin: 'none', displaySignout:'inline-block'})
   },
   logout: function(e) {
     e.preventDefault()
     dataRoot.unauth()
-    this.setState({status: 'hidden'})
+    this.props.updateUser('none')
+    this.setState({displaySignout: 'none', displaySignin: 'inline-block'})
   },
   render: function () {
     return (
-      <button onClick={this.logout} className="btn btn-default">Signout</button>
+      <div>
+        <button onClick={this.login} className="btn btn-success" style={{ display: this.state.displaySignin }}>Sign In</button>
+        <button onClick={this.logout} className="btn btn-default" style={{ display: this.state.displaySignout }}>Sign Out</button>
+      </div>
     )
   }
 })
 
+const Projects = React.createClass({
+  getInitialState: function() {
+    return {
+      repos: []
+    }
+  },
+  componentWillUpdate: function(nextProps, nextState){
+    // $.get('http://localhost:3000/users/' + this.props)
+    console.log(nextProps)
+  },
+  addRepo: function(repos) {
+    for (let i in repos) {
+      this.setState({repos: this.state.repos.concat(repos[i])})
+    }
+  },
+  render: function() {
+    // let items = this.state.repos.map((repo) => {
+    //   return (<Repo name={repo} />)
+    // })
+    return (
+      <div className="container">
+      </div>
+    )
+  }
+})
 ReactDOM.render(<Main />, mountNode)
