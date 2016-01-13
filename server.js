@@ -22,11 +22,10 @@ app.use(serve(__dirname + '/client'))
 io.on('connection', (socket) => {
   console.log('User connected')
   socket.on('userLogin', (data) => {
-    console.log(data)
     const token = tokenGenerator.createToken({uid: data, provider: 'github'})
     userData.promiseAuthWithCustomToken(token)
     userData.child(data).on('value', (snapshot) =>{
-      console.log(snapshot.val())
+      
     })
   })
 })
