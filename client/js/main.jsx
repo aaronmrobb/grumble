@@ -3,26 +3,13 @@ import $ from 'jquery'
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import Firebase from 'firebase'
+import io from 'socket.io-client'
 
+const socket = io.connect()
+socket.once('connect', function () {
+})
 const mountNode = document.getElementById('app')
 const dataRoot = new Firebase('https://grumble.firebaseio.com/')
-//
-// $('#signin').on('click', (e) => {
-//   e.preventDefault()
-
-// })
-//
-// $('#signout').on('click', (e) => {
-//   e.preventDefault()
-//   dataRoot.unauth()
-//
-// })
-//
-// $('#add-record').on('submit', (e) => {
-//   e.preventDefault()
-//   console.log('Something')
-//   userRoot.child('record').push($('#record').val())
-// })
 
 const Main = React.createClass({
   getInitialState: function() {
@@ -111,9 +98,7 @@ const Projects = React.createClass({
     }
   },
   componentDidUpdate: function(){
-    $.get('http://localhost:5000/users/' + this.props.user, (data) => {
-      console.log(data)
-    })
+    socket.emit('userLogin', this.props.user)
   },
   addRepo: function(repos) {
     for (let i in repos) {
