@@ -6,10 +6,10 @@ const serve = require('koa-static')
 const thunkify = require('thunkify-wrap')
 const app = koa()
 const dataRoot = new Firebase('https://grumble.firebaseio.com/')
-const port =  process.env.PORT || 3000
+const port =  process.env.PORT || 5000
 const server = require('http').createServer(app.callback()).listen(port)
 const dotenv = require('dotenv')
-
+const userData = new Firebase('https://grumble.firebaseio.com/users/')
 dotenv.load()
 
 app.use(koaBody({
@@ -22,8 +22,13 @@ app.use(koaBody({
 
 app.use(serve(__dirname + '/client'))
 
-router.get('', function *(next) {
+router.get('/users/:id', function *(next) {
+  userData.child(this.params.id).on('value', (snapshot) => {
+    this.status = 200
+    this.body = snapshot.val()
+  }, (errorObject) => {
 
+  })
 })
 router.post('', function *(next) {
 

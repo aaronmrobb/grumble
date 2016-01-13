@@ -110,9 +110,10 @@ const Projects = React.createClass({
       repos: []
     }
   },
-  componentWillUpdate: function(nextProps, nextState){
-    // $.get('http://localhost:3000/users/' + this.props)
-    console.log(nextProps)
+  componentDidUpdate: function(){
+    $.get('http://localhost:5000/users/' + this.props.user, (data) => {
+      console.log(data)
+    })
   },
   addRepo: function(repos) {
     for (let i in repos) {
