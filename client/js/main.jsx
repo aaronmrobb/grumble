@@ -27,7 +27,7 @@ const Main = React.createClass({
   render: function () {
     return (
       <div>
-        <Navigation updateUser={this.updateUser} user={this.state.user} />
+        <Navigation updateUser={this.updateUser} user={this.state.user} username={this.state.username} />
         <Projects user={this.state.user} username={this.state.username} />
       </div>
 
@@ -49,7 +49,7 @@ const Navigation = React.createClass({
             <li></li>
           </ul>
           <div className="navbar-right">
-            <Signin updateUser={this.props.updateUser} user={this.props.user}/>
+            <Signin updateUser={this.props.updateUser} user={this.props.user} username={this.props.username}/>
           </div>
         </div>
       </div>
@@ -86,6 +86,7 @@ const Signin = React.createClass({
   render: function () {
     return (
       <div>
+        <span className="username"> {this.props.username? this.props.username : ''}</span>
         <button onClick={this.login} className="btn btn-success" style={{ display: this.state.displaySignin }}>Sign In</button>
         <button onClick={this.logout} className="btn btn-default" style={{ display: this.state.displaySignout }}>Sign Out</button>
       </div>
@@ -128,13 +129,34 @@ const Projects = React.createClass({
       j++
     }
     this.setState({
-      repos: this.state.repos.concat(reposToAdd)
+      repos: reposToAdd
     })
     console.log(this.state.repos)
   },
+  passUp: function(props, state) {
+    var updatedIndex
+    var j = 0
+    var updatedRepos = this.state.repos
+    for(let i in updatedRepos){
+      if (updatedRepos[i].name === props.name) {
+        updatedIndex = j
+      }
+      j++
+    }
+    updatedRepos[updatedIndex].time = state
+    this.setState({
+      repos: updatedRepos
+    })
+    this.updateDatabase(this.state.repos)
+  },
+  componentWillUnmount: function(){
+  },
+  updateDatabase: function(data) {
+    socket.emit('updateDb', data)
+  },
   render: function() {
     var repos = this.state.repos.map((repo) => {
-      return <Repo name={repo.name} url={repo.url} key={repo.key} time={repo.time}/>
+      return <Repo name={repo.name} url={repo.url} key={repo.key} time={repo.time} passUp={this.passUp}/>
     })
     return (
       <div className="container">
@@ -147,13 +169,41 @@ const Projects = React.createClass({
 
 const Repo = React.createClass({
   getInitialState: function() {
-    return {}
+    return {
+      toggle: 'off',
+      time: this.props.time
+    }
+  },
+  componentWillUnmount: function() {
+    this.props.passUp(this.props, this.state.time)
+  },
+  tick: function(){
+    this.setState({time: this.state.time + 1});
+  },
+  toggleTime: function(){
+    if(this.state.toggle === 'on') {
+      this.setState({
+        toggle: 'off',
+      })
+      this.props.passUp(this.props, this.state.time)
+      clearInterval(this.interval);
+    } else {
+      this.setState({
+        toggle: 'on',
+      })
+      this.interval = setInterval(this.tick, 1000);
+    }
+
   },
   render: function() {
     return (
-      <div className="repo">
+      <div className="repo col-md-6 col-md-offset-3">
         <h3>{this.props.name}</h3>
         <a href={this.props.url}>Link</a>
+        <div className="timer">{this.state.time}</div>
+        <button className="btn btn-success" onClick={this.toggleTime}>
+          Turn {this.state.toggle === 'on' ? 'off' : 'on'}
+        </button>
       </div>
     )
   }

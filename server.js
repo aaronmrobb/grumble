@@ -29,7 +29,6 @@ app.use(serve(__dirname + '/client'))
 io.on('connection', (socket) => {
   socket.on('userLogin', (data) => {
     socket.localUser = data
-    console.log(data)
     const token = tokenGenerator.createToken({uid: socket.localUser.user, provider: 'github'})
     userData.promiseAuthWithCustomToken(token)
   })
@@ -49,7 +48,6 @@ io.on('connection', (socket) => {
                         dupe = true
                       }
                     }
-                    console.log(dupe)
                     if (!dupe) {
                       userData.child(socket.localUser.user).child('projects').push({
                         'name': res.body[i].name,
@@ -65,6 +63,15 @@ io.on('connection', (socket) => {
               }
             })
           })
+    socket.on('updateDb', (data) => {
+      for(let i in data) {
+        userData.child(socket.localUser.user).child('projects').child(data[i].key).set({
+          name: data[i].name,
+          time: data[i].time,
+          url: data[i].url
+        })
+      }
+    })
 
   })
 
