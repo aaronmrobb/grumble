@@ -17,16 +17,17 @@ const Main = React.createClass({
       user : ''
     }
   },
-  updateUser: function (user) {
+  updateUser: function (user, username) {
     this.setState({
-      user: user
+      user: user,
+      username: username
     })
   },
   render: function () {
     return (
       <div>
-        <Navigation updateUser={this.updateUser} user={this.state.user}/>
-        <Projects user={this.state.user} />
+        <Navigation updateUser={this.updateUser} user={this.state.user} />
+        <Projects user={this.state.user} username={this.state.username} />
       </div>
 
     )
@@ -70,7 +71,7 @@ const Signin = React.createClass({
         if (error) {
           console.log("Login Failed!", error)
       } else {
-        this.props.updateUser(authData.uid)
+        this.props.updateUser(authData.uid, authData.github.username)
       }
     })
     this.setState({displaySignin: 'none', displaySignout:'inline-block'})
@@ -94,23 +95,34 @@ const Signin = React.createClass({
 const Projects = React.createClass({
   getInitialState: function() {
     return {
+      loggedIn: false,
       repos: []
     }
   },
-  componentDidUpdate: function(){
-    socket.emit('userLogin', this.props.user)
+  componentDidMount: function() {
+    socket.on('projectsLoaded', (data) => {
+      console.log(data)
+    })
   },
-  addRepo: function(repos) {
-    for (let i in repos) {
-      this.setState({repos: this.state.repos.concat(repos[i])})
+  componentDidUpdate: function(){
+    if(this.props.user && !this.state.loggedIn){
+      socket.emit('userLogin', this.props)
+      this.setState({loggedIn: true})
     }
   },
+  requestRepos: function(){
+    socket.emit('loadProjects', this.state.loggedIn)
+  },
+  addRepo: function(repos) {
+    // for (let i in repos) {
+    //   this.setState({repos: this.state.repos.concat(repos[i])})
+    // }
+  },
   render: function() {
-    // let items = this.state.repos.map((repo) => {
-    //   return (<Repo name={repo} />)
-    // })
+
     return (
       <div className="container">
+        <button className="btn btn-success" onClick={this.requestRepos}>Load Projects</button>
       </div>
     )
   }
