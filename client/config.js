@@ -21,6 +21,7 @@ System.config({
     "firebase": "npm:firebase@2.3.2",
     "jquery": "npm:jquery@2.2.0",
     "jsx": "npm:jspm-loader-jsx@0.0.7",
+    "ramda": "npm:ramda@0.19.1",
     "react": "npm:react@0.14.6",
     "react-bootstrap": "npm:react-bootstrap@0.28.2",
     "react-dom": "npm:react-dom@0.14.6",
@@ -516,6 +517,9 @@ System.config({
       "randombytes": "npm:randombytes@2.0.1"
     },
     "npm:punycode@1.3.2": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:ramda@0.19.1": {
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:randombytes@2.0.1": {

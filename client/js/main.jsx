@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import Firebase from 'firebase'
 import io from 'socket.io-client'
+import R from 'ramda'
 
 const socket = io.connect()
 socket.once('connect', function () {
@@ -101,7 +102,7 @@ const Projects = React.createClass({
   },
   componentDidMount: function() {
     socket.on('projectsLoaded', (data) => {
-      console.log(data)
+      this.addRepos(data)
     })
   },
   componentDidUpdate: function(){
@@ -113,16 +114,46 @@ const Projects = React.createClass({
   requestRepos: function(){
     socket.emit('loadProjects', this.state.loggedIn)
   },
-  addRepo: function(repos) {
-    // for (let i in repos) {
-    //   this.setState({repos: this.state.repos.concat(repos[i])})
-    // }
+  addRepos: function(repos) {
+    var reposToAdd = []
+    var repoKeys = R.keys(repos)
+    var j = 0
+    for (let i in repos) {
+      reposToAdd.push({
+        key: repoKeys[j],
+        name: repos[i].name,
+        url: repos[i].url,
+        time: repos[i].time
+      })
+      j++
+    }
+    this.setState({
+      repos: this.state.repos.concat(reposToAdd)
+    })
+    console.log(this.state.repos)
   },
   render: function() {
-
+    var repos = this.state.repos.map((repo) => {
+      return <Repo name={repo.name} url={repo.url} key={repo.key} time={repo.time}/>
+    })
     return (
       <div className="container">
+        {repos}
         <button className="btn btn-success" onClick={this.requestRepos}>Load Projects</button>
+      </div>
+    )
+  }
+})
+
+const Repo = React.createClass({
+  getInitialState: function() {
+    return {}
+  },
+  render: function() {
+    return (
+      <div className="repo">
+        <h3>{this.props.name}</h3>
+        <a href={this.props.url}>Link</a>
       </div>
     )
   }
