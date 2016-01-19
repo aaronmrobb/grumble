@@ -5,4 +5,10 @@
   margin: 0 15px;
 }
 
+.center {
+  text-align: center;
+  margin: auto;
+  display: block;
+}
+
 /*# sourceMappingURL=main.css.map */

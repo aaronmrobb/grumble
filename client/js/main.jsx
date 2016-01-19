@@ -107,12 +107,17 @@ const Signin = React.createClass({
 const Projects = React.createClass({
   getInitialState: function() {
     return {
-      repos: []
+      repos: [],
+      loggedIn: 'none'
     }
   },
-  componentDidUpdate: function(){
+
+  getRepos: function(e) {
+    e.preventDefault()
     $.get('http://localhost:5000/users/' + this.props.user, (data) => {
-      console.log(data)
+      this.setState({
+        repos: data.projects
+      })
     })
   },
   addRepo: function(repos) {
@@ -121,11 +126,11 @@ const Projects = React.createClass({
     }
   },
   render: function() {
-    // let items = this.state.repos.map((repo) => {
-    //   return (<Repo name={repo} />)
-    // })
+    const { user } = this.props
+    let display = user ? 'block' : 'none'
     return (
       <div className="container">
+        <button className="btn btn-success btn-lg center" style={{ display: display }} onClick={this.getRepos}>Get Repos</button>
       </div>
     )
   }

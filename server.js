@@ -5,18 +5,14 @@ const Firenext = require('Firenext')
 const FirebaseTokenGenerator = require("firebase-token-generator")
 const router = require('koa-router')()
 const serve = require('koa-static')
-const thunkify = require('thunkify-wrap')
 const app = koa()
 const port =  process.env.PORT || 5000
 const server = require('http').createServer(app.callback()).listen(port)
 const dotenv = require('dotenv')
-
-
-const userData = new Firenext('https://grumble.firebaseio.com/users/')
-
 dotenv.load()
 
 
+const userData = new Firenext('https://grumble.firebaseio.com/users/')
 const tokenGenerator = new FirebaseTokenGenerator(process.env.FIREBASE_SECRET)
 
 app.use(koaBody({
@@ -34,8 +30,6 @@ router.get('/users/:id', function *(next) {
   let user
   const token = tokenGenerator.createToken({uid: this.params.id, provider: 'github'})
   userData.authWithCustomToken(token)
-
-
   this.status = 200
   this.body = yield getUser(this.params.id)
 })
