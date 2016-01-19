@@ -9,6 +9,7 @@ const app = koa()
 const port =  process.env.PORT || 5000
 const server = require('http').createServer(app.callback()).listen(port)
 const dotenv = require('dotenv')
+const request = require('superagent')
 dotenv.load()
 
 
@@ -49,6 +50,13 @@ router.patch('', function *(next) {
 router.delete('', function *(next) {
 
 })
+
+request.get("https://api.github.com/users/" + socket.localUser.username + "/repos?client_id=" +
+        process.env.GITHUB_CLIENT_ID + "&client_secret=" + process.env.GITHUB_CLIENT_SECRET).end((err, res) => {
+          if (err) {
+            console.log('Error')
+          }
+  }
 
 app.use(router.routes())
 console.log('Listening on ' + port)
