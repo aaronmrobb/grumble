@@ -6,23 +6,7 @@ import Firebase from 'firebase'
 
 const mountNode = document.getElementById('app')
 const dataRoot = new Firebase('https://grumble.firebaseio.com/')
-//
-// $('#signin').on('click', (e) => {
-//   e.preventDefault()
 
-// })
-//
-// $('#signout').on('click', (e) => {
-//   e.preventDefault()
-//   dataRoot.unauth()
-//
-// })
-//
-// $('#add-record').on('submit', (e) => {
-//   e.preventDefault()
-//   console.log('Something')
-//   userRoot.child('record').push($('#record').val())
-// })
 
 const Main = React.createClass({
   getInitialState: function() {
@@ -30,16 +14,17 @@ const Main = React.createClass({
       user : ''
     }
   },
-  updateUser: function (user) {
+  updateUser: function (user, username) {
     this.setState({
-      user: user
+      user: user,
+      username: username
     })
   },
   render: function () {
     return (
       <div>
-        <Navigation updateUser={this.updateUser} user={this.state.user}/>
-        <Projects user={this.state.user} />
+        <Navigation updateUser={this.updateUser} user={this.state.user}  username={this.state.username}/>
+        <Projects user={this.state.user}  username={this.state.username} />
       </div>
 
     )
@@ -60,7 +45,7 @@ const Navigation = React.createClass({
             <li></li>
           </ul>
           <div className="navbar-right">
-            <Signin updateUser={this.props.updateUser} user={this.props.user}/>
+            <Signin updateUser={this.props.updateUser} user={this.props.user} username={this.props.username}/>
           </div>
         </div>
       </div>
@@ -83,7 +68,7 @@ const Signin = React.createClass({
         if (error) {
           console.log("Login Failed!", error)
       } else {
-        this.props.updateUser(authData.uid)
+        this.props.updateUser(authData.uid, authData.github.username)
       }
     })
     this.setState({displaySignin: 'none', displaySignout:'inline-block'})
@@ -118,6 +103,9 @@ const Projects = React.createClass({
       this.setState({
         repos: data.projects
       })
+    })
+    $.get('http://localhost:5000/users/' + this.props.user + '/' + this.props.username, (data) => {
+      console.log(data)
     })
   },
   addRepo: function(repos) {
