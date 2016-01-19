@@ -31,7 +31,8 @@ router.get('/users/:id', function *(next) {
   let user = this.params.id
   const token = tokenGenerator.createToken({uid: this.params.id, provider: 'github'})
   userData.authWithCustomToken(token)
-  gRequest(user)
+  let blah = gRequest(user)
+  console.log(user)
   this.status = 200
   this.body = yield getUser(user)
 
@@ -43,15 +44,16 @@ function getUser(username) {
   })
 }
 
-function *gRequest(username) {
-  let blah
-  yield request.get("https://api.github.com/users/" + username + "/repos?client_id=" +
-          process.env.GITHUB_CLIENT_ID + "&client_secret=" + process.env.GITHUB_CLIENT_SECRET).end((err, res) => {
-            if (err) { console.log('Error')
+const blah = gRequest('github:7015780')
 
+function gRequest(username) {
+  request.get("https://api.github.com/users/" + username + "/repos?client_id=" +
+          process.env.GITHUB_CLIENT_ID + "&client_secret=" + process.env.GITHUB_CLIENT_SECRET).end((err, res) => {
+            if (err) {
+              console.log('Error', err)
             } else {
-              console.log(res)
-    }
+              console.log(res.body)
+        }
   })
 }
 
