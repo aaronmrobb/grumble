@@ -6,6 +6,7 @@ const FirebaseTokenGenerator = require("firebase-token-generator")
 const router = require('koa-router')()
 const serve = require('koa-static')
 const app = koa()
+const thunkify = require('thunkify-wrap')
 const port =  process.env.PORT || 5000
 const server = require('http').createServer(app.callback()).listen(port)
 const dotenv = require('dotenv')
@@ -33,6 +34,7 @@ router.get('/users/:id', function *(next) {
   userData.authWithCustomToken(token)
   this.status = 200
   this.body = yield getUser(this.params.id)
+
 })
 
 function getUser(username) {
@@ -40,6 +42,7 @@ function getUser(username) {
     return snapshot.val()
   })
 }
+
 
 router.post('', function *(next) {
 
@@ -51,12 +54,6 @@ router.delete('', function *(next) {
 
 })
 
-request.get("https://api.github.com/users/" + socket.localUser.username + "/repos?client_id=" +
-        process.env.GITHUB_CLIENT_ID + "&client_secret=" + process.env.GITHUB_CLIENT_SECRET).end((err, res) => {
-          if (err) {
-            console.log('Error')
-          }
-  }
 
 app.use(router.routes())
 console.log('Listening on ' + port)
