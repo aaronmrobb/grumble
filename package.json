@@ -48,6 +48,7 @@
     "firebase": "^2.3.2",
     "firebase-promisified": "0.0.1",
     "firebase-token-generator": "^2.0.0",
+    "firenext": "^3.3.0",
     "koa": "^1.1.2",
     "koa-better-body": "^1.0.17",
     "koa-router": "^5.3.0",
