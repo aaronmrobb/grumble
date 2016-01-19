@@ -28,18 +28,30 @@ app.use(koaBody({
 app.use(serve(__dirname + '/client'))
 
 router.get('/users/:id', function *(next) {
-  let response
-  let user
+  let user = this.params.id
   const token = tokenGenerator.createToken({uid: this.params.id, provider: 'github'})
   userData.authWithCustomToken(token)
+  gRequest(user)
   this.status = 200
-  this.body = yield getUser(this.params.id)
+  this.body = yield getUser(user)
 
 })
 
 function getUser(username) {
   return userData.child(username).exec().then(function(snapshot){
     return snapshot.val()
+  })
+}
+
+function *gRequest(username) {
+  let blah
+  yield request.get("https://api.github.com/users/" + username + "/repos?client_id=" +
+          process.env.GITHUB_CLIENT_ID + "&client_secret=" + process.env.GITHUB_CLIENT_SECRET).end((err, res) => {
+            if (err) { console.log('Error')
+
+            } else {
+              console.log(res)
+    }
   })
 }
 
