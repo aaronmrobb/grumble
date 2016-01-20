@@ -11,6 +11,7 @@ const port =  process.env.PORT || 5000
 const server = require('http').createServer(app.callback()).listen(port)
 const dotenv = require('dotenv')
 const request = require('superagent')
+const R = require('ramda')
 dotenv.load()
 
 
@@ -27,20 +28,25 @@ app.use(koaBody({
 
 app.use(serve(__dirname + '/client'))
 
-router.get('/users/:id', function *(next) {
+router.get('/users/:id/:username', function *(next) {
   let userId = this.params.id
+  let username = this.params.username
   const token = tokenGenerator.createToken({uid: this.params.id, provider: 'github'})
   userData.authWithCustomToken(token)
+  let userInformation = yield checkRepos(username, userId)
   this.status = 200
-  this.body = yield getUser(userId)
+  this.body = userInformation
 
 })
 
-router.get('/users/:id/:username', function *(next) {
-  let username = this.params.username
-  let blah = yield request.get("https://api.github.com/users/" + username + "/repos?client_id=" +
-          process.env.GITHUB_CLIENT_ID + "&client_secret=" + process.env.GITHUB_CLIENT_SECRET)
-})
+function *checkRepos(username, userId) {
+  let userInformation = yield getUser(userId)
+  if (R.keys(userInformation.projects).length < 1) {
+    let repos = yield getRepos(username)
+    userInformation = yield updateRepos(repos)
+  }
+  return userInformation
+}
 
 function getUser(username) {
   return userData.child(username).exec().then(function(snapshot){
@@ -48,6 +54,10 @@ function getUser(username) {
   })
 }
 
+function getRepos(username) {
+  return request.get("https://api.github.com/users/" + username + "/repos?client_id=" +
+          process.env.GITHUB_CLIENT_ID + "&client_secret=" + process.env.GITHUB_CLIENT_SECRET)
+}
 
 
 router.post('', function *(next) {
