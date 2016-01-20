@@ -132,12 +132,12 @@ class Projects extends Component {
     return repos
   }
   render() {
-    const { user } = this.props
+    const { user, username } = this.props
     const repoCards = []
     if(this.state.repos.length > 0){
       const { repos } = this.state
       repos.map((repo) => {
-        repoCards.push(<Repo name={repo.name} url={repo.url} key={repo.key} time={repo.time}/>)
+        repoCards.push(<Repo name={repo.name} url={repo.url} key={repo.key}  hash={repo.key} time={repo.time} user={user} username={username}/>)
       })
     }
 
@@ -167,14 +167,21 @@ class Repo extends Component {
     })
   }
   updateDatabase() {
-
+    const { user, name, url, hash } = this.props
+    const { time } = this.state
+    dataRoot.child('users').child(user).child('projects').child(hash).set({
+      name: name,
+      time: time,
+      url: url
+    })
   }
   toggleTime() {
     if(this.state.toggle) {
       this.setState({
         toggle: false
       })
-      clearInterval(this.interval);
+      clearInterval(this.interval)
+      this.updateDatabase()
     } else {
        this.setState({
          toggle: true,
@@ -185,12 +192,16 @@ class Repo extends Component {
   render() {
     return(
       <div className="repo col-md-8 col-md-offset-2">
-        <h3>{this.props.name}</h3>
-        <a href={this.props.url}>Link</a>
-        <div className="timer">{this.state.time}</div>
-        <button className="btn btn-success" onClick={this.toggleTime.bind(this)}>
-          Turn {this.state.toggle === 'on' ? 'off' : 'on'}
-        </button>
+        <div className="col-md-8">
+          <h3>{this.props.name}</h3>
+          <a href={this.props.url}>Link</a>
+        </div>
+        <div className="col-md-4">
+          <div className="timer">{this.state.time}</div>
+          <button className="btn btn-success" onClick={this.toggleTime.bind(this)}>
+            Turn {this.state.toggle ? 'off' : 'on'}
+          </button>
+        </div>
       </div>
     )
   }
