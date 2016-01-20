@@ -23,6 +23,7 @@ System.config({
     "jsx": "npm:jspm-loader-jsx@0.0.7",
     "ramda": "npm:ramda@0.19.1",
     "react": "npm:react@0.14.6",
+    "react-addons-css-transition-group": "npm:react-addons-css-transition-group@0.14.6",
     "react-bootstrap": "npm:react-bootstrap@0.28.2",
     "react-dom": "npm:react-dom@0.14.6",
     "github:jspm/nodelibs-assert@0.1.0": {
@@ -36,9 +37,6 @@ System.config({
     },
     "github:jspm/nodelibs-crypto@0.1.0": {
       "crypto-browserify": "npm:crypto-browserify@3.11.0"
-    },
-    "github:jspm/nodelibs-domain@0.1.0": {
-      "domain-browser": "npm:domain-browser@1.1.7"
     },
     "github:jspm/nodelibs-events@0.1.1": {
       "events": "npm:events@1.0.2"
@@ -92,10 +90,6 @@ System.config({
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "module": "github:jspm/nodelibs-module@0.1.0",
       "path": "github:jspm/nodelibs-path@0.1.0",
-      "process": "github:jspm/nodelibs-process@0.1.2"
-    },
-    "npm:asap@2.0.3": {
-      "domain": "github:jspm/nodelibs-domain@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:asn1.js@4.3.0": {
@@ -237,9 +231,6 @@ System.config({
       "randombytes": "npm:randombytes@2.0.1",
       "systemjs-json": "github:systemjs/plugin-json@0.1.0"
     },
-    "npm:domain-browser@1.1.7": {
-      "events": "github:jspm/nodelibs-events@0.1.1"
-    },
     "npm:elliptic@6.0.2": {
       "bn.js": "npm:bn.js@4.6.2",
       "brorand": "npm:brorand@1.0.5",
@@ -275,12 +266,7 @@ System.config({
       "websocket-driver": "npm:websocket-driver@0.6.4"
     },
     "npm:fbjs@0.6.1": {
-      "core-js": "npm:core-js@1.2.6",
-      "loose-envify": "npm:loose-envify@1.1.0",
-      "process": "github:jspm/nodelibs-process@0.1.2",
-      "promise": "npm:promise@7.1.1",
-      "ua-parser-js": "npm:ua-parser-js@0.7.10",
-      "whatwg-fetch": "npm:whatwg-fetch@0.9.0"
+      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:firebase@2.3.2": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
@@ -357,10 +343,6 @@ System.config({
     "npm:process@0.11.2": {
       "assert": "github:jspm/nodelibs-assert@0.1.0"
     },
-    "npm:promise@7.1.1": {
-      "asap": "npm:asap@2.0.3",
-      "fs": "github:jspm/nodelibs-fs@0.1.2"
-    },
     "npm:public-encrypt@4.0.0": {
       "bn.js": "npm:bn.js@4.6.2",
       "browserify-rsa": "npm:browserify-rsa@4.0.0",
@@ -380,6 +362,9 @@ System.config({
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "crypto": "github:jspm/nodelibs-crypto@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:react-addons-css-transition-group@0.14.6": {
+      "react": "npm:react@0.14.6"
     },
     "npm:react-bootstrap@0.28.2": {
       "babel-runtime": "npm:babel-runtime@5.8.34",
@@ -419,7 +404,6 @@ System.config({
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:react@0.14.6": {
-      "envify": "npm:envify@3.4.0",
       "fbjs": "npm:fbjs@0.6.1",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
@@ -466,9 +450,6 @@ System.config({
     },
     "npm:timers-browserify@1.4.2": {
       "process": "npm:process@0.11.2"
-    },
-    "npm:ua-parser-js@0.7.10": {
-      "systemjs-json": "github:systemjs/plugin-json@0.1.0"
     },
     "npm:uncontrollable@3.2.1": {
       "invariant": "npm:invariant@2.2.0",
