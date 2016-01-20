@@ -8,12 +8,21 @@ import R from 'ramda'
 const mountNode = document.getElementById('app')
 const dataRoot = new Firebase('https://grumble.firebaseio.com/')
 
+
+
+
 class Main extends Component {
   constructor(props){
     super(props)
     this.state = {
       user: '',
       username: ''
+    }
+  }
+  componentWillMount() {
+    const authData = dataRoot.getAuth()
+    if(authData){
+      this.updateUser(authData.uid, authData.github.username)
     }
   }
   updateUser(user, username) {
@@ -63,10 +72,6 @@ class Navigation extends Component {
 class Signin extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      displaySignin: 'inline-block',
-      displaySignout: 'none'
-    }
   }
   login(e) {
     e.preventDefault()
@@ -77,25 +82,21 @@ class Signin extends Component {
         this.props.updateUser(authData.uid, authData.github.username)
       }
     })
-    this.setState({
-      displaySignin: 'none',
-      displaySignout:'inline-block'
-    })
   }
   logout(e) {
     e.preventDefault()
     dataRoot.unauth()
-    this.props.updateUser('none')
-    this.setState({
-      displaySignout: 'none',
-      displaySignin: 'inline-block'
-    })
+    this.props.updateUser('', '')
   }
   render() {
+    const { user } = this.props
+    console.log(user)
+    let signIn = user.length  < 1 ? 'inline-block' : 'none'
+    let signOut = user.length > 0 ? 'inline-block' : 'none'
     return(
       <div>
-        <button onClick={this.login.bind(this)} className="btn btn-success" style={{ display: this.state.displaySignin }}>Sign In</button>
-        <button onClick={this.logout.bind(this)} className="btn btn-default" style={{ display: this.state.displaySignout }}>Sign Out</button>
+        <button onClick={this.login.bind(this)} className="btn btn-success" style={{ display: signIn }}>Sign In</button>
+        <button onClick={this.logout.bind(this)} className="btn btn-default" style={{ display: signOut }}>Sign Out</button>
       </div>
     )
   }
@@ -108,8 +109,20 @@ class Projects extends Component {
       repos: []
     }
   }
-  getRepos(e) {
-    e.preventDefault()
+  componentWillMount(){
+    const { user } = this.props
+    if(user.length > 0) {
+      this.getRepos()
+    }
+  }
+  componentWillReceiveProps(props) {
+    if(props.user.length < 1) {
+      this.setState({
+        repos: []
+      })
+    }
+  }
+  getRepos() {
     $.get('http://localhost:5000/users/' + this.props.user + '/' + this.props.username, (data) => {
       this.setState({
         repos: this.convertRepos(data.projects)
