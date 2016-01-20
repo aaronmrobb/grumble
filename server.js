@@ -39,18 +39,60 @@ router.get('/users/:id/:username', function *(next) {
 
 })
 
+router.patch('/users/:id/:hash', function *(next) {
+  const project = this.request.body.fields
+  const id = this.params.id
+  const hash = this.params.hash
+  const token = tokenGenerator.createToken({uid: id, provider: 'github'})
+  userData.authWithCustomToken(token)
+
+  yield setData(id, hash, project)
+  this.status = 200
+  this.body = "Success"
+})
+
+router.post('', function *(next) {
+
+})
+
+router.delete('', function *(next) {
+
+})
+
+
 function *checkRepos(username, userId) {
   let userInformation = yield getUser(userId)
-  if (R.keys(userInformation.projects).length < 1) {
-    let repos = yield getRepos(username)
-    userInformation = yield updateRepos(repos)
+  if (userInformation === null) {
+    let res = yield getRepos(username)
+    let repos = res.body
+    let repo
+    for (let i in repos) {
+      repo = {
+        name: repos[i].name,
+        time: 0,
+        url: repos[i].html_url
+      }
+      yield updateRepos(userId, repo)
+    }
+    userInformation = yield getUser(userId)
   }
   return userInformation
 }
 
-function getUser(username) {
-  return userData.child(username).exec().then(function(snapshot){
+
+function getUser(userId) {
+  return userData.child(userId).exec().then(function(snapshot){
     return snapshot.val()
+  })
+}
+
+function setData(userId, hash, project) {
+  const now = new Date().getTime()
+  return userData.child(userId).child('projects').child(hash).set({
+    name: project.name,
+    time: parseInt(project.time),
+    url: project.url,
+    updatedAt: now
   })
 }
 
@@ -59,16 +101,15 @@ function getRepos(username) {
           process.env.GITHUB_CLIENT_ID + "&client_secret=" + process.env.GITHUB_CLIENT_SECRET)
 }
 
-
-router.post('', function *(next) {
-
-})
-router.patch('', function *(next) {
-
-})
-router.delete('', function *(next) {
-
-})
+function *updateRepos(userId, data) {
+  const now = new Date().getTime()
+  yield userData.child(userId).child('projects').push({
+    name: data.name,
+    time: data.time,
+    url: data.url,
+    updatedAt: now
+  }).exec()
+}
 
 
 app.use(router.routes())

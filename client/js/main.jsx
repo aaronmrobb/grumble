@@ -169,11 +169,15 @@ class Repo extends Component {
   updateDatabase() {
     const { user, name, url, hash } = this.props
     const { time } = this.state
-    dataRoot.child('users').child(user).child('projects').child(hash).set({
-      name: name,
-      time: time,
-      url: url
-    })
+    $.ajax({
+      url: "http://localhost:5000/users/" + user + "/" + hash,
+      type: 'PATCH',
+      data: {   name: name,
+          time: time,
+          url: url
+        }
+      })
+
   }
   toggleTime() {
     if(this.state.toggle) {
