@@ -125,19 +125,35 @@ class Projects extends Component {
         key: keys[hash],
         name: data[i].name,
         url: data[i].url,
-        time: data[i].time
+        time: data[i].time,
+        updatedAt: data[i].updatedAt
       })
       hash++
     }
     return repos
   }
+  orderRepos() {
+    const { repos } = this.state
+    const mostRecent = R.sort((a, b) => {
+      return b.updatedAt - a.updatedAt
+    }, repos)
+    return mostRecent
+  }
+  lastUsed(hash) {
+    const { repos } = this.state
+    let usedRepo = R.find(R.propEq('key', hash))(repos)
+    repos[repos.indexOf(usedRepo)].updatedAt = new Date().getTime()
+    this.setState({
+      repos: repos
+    })
+  }
   render() {
     const { user, username } = this.props
     const repoCards = []
     if(this.state.repos.length > 0){
-      const { repos } = this.state
+      const repos = this.orderRepos()
       repos.map((repo) => {
-        repoCards.push(<Repo name={repo.name} url={repo.url} key={repo.key}  hash={repo.key} time={repo.time} user={user} username={username}/>)
+        repoCards.push(<Repo name={repo.name} url={repo.url} key={repo.key}  hash={repo.key} time={repo.time} user={user} username={username} lastUsed={this.lastUsed.bind(this)}/>)
       })
     }
 
@@ -190,6 +206,7 @@ class Repo extends Component {
        this.setState({
          toggle: true,
        })
+       this.props.lastUsed(this.props.hash)
        this.interval = setInterval(this.tick.bind(this), 1000);
      }
   }
