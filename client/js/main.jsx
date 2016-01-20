@@ -166,7 +166,9 @@ class Projects extends Component {
     if(this.state.repos.length > 0){
       const repos = this.orderRepos()
       repos.map((repo) => {
-        repoCards.push(<Repo name={repo.name} url={repo.url} key={repo.key}  hash={repo.key} time={repo.time} user={user} username={username} lastUsed={this.lastUsed.bind(this)}/>)
+        repoCards.push(<Repo name={repo.name} url={repo.url} key={repo.key}
+          hash={repo.key} time={repo.time} user={user} username={username}
+          lastUsed={this.lastUsed.bind(this)}/>)
       })
     }
 
@@ -226,13 +228,13 @@ class Repo extends Component {
   render() {
     return(
       <div className="repo col-md-8 col-md-offset-2">
-        <div className="col-md-8">
+        <div className="col-md-8 info">
           <h3>{this.props.name}</h3>
           <a href={this.props.url}>Link</a>
         </div>
-        <div className="col-md-4">
+        <div className="col-md-4 toggle">
           <div className="timer">{this.state.time}</div>
-          <button className="btn btn-success" onClick={this.toggleTime.bind(this)}>
+          <button className="" onClick={this.toggleTime.bind(this)}>
             Turn {this.state.toggle ? 'off' : 'on'}
           </button>
         </div>

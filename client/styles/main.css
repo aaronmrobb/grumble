@@ -1,23 +1,48 @@
-.navbar-right {
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+body {
+  font-family: 'Open Sans', Helvetica, sans-serif;
+}
+
+.navbar {
+  background-color: #2C3E50;
+}
+.navbar .navbar-brand {
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: white;
+  transition: all 1s;
+}
+.navbar .navbar-brand:hover {
+  color: white;
+  letter-spacing: 3px;
+}
+.navbar .navbar-right {
   padding: 10px;
 }
-.navbar-right .btn {
+.navbar .navbar-right .btn {
   margin: 0 15px;
+  background-color: #3498db;
+  border: none;
+  color: white;
 }
-
-.center {
-  text-align: center;
-  margin: auto;
-  display: block;
-}
-
-.loader {
-  margin-top:50px;
-  padding: 0 0 100px 0;
+.navbar .navbar-right .btn:hover {
+  background-color: #2980B9;
 }
 
 .repo {
-  transition: all .3s
+  background-color: #F5F5F5;
+  padding: 25px 45px;
+  margin-bottom: 25px;
+}
+.repo .info h3 {
+  margin: 0 0 10px 0;
+  font-size: 3rem;
+  text-transform: uppercase;
+  color: #3498db;
+}
+.repo .info a {
+  color: #3498db;
+  text-transform: uppercase;
 }
 
 /*# sourceMappingURL=main.css.map */
