@@ -226,17 +226,16 @@ class Repo extends Component {
      }
   }
   render() {
+    const { toggle } = this.state
+    const timerClasses = toggle ? 'active timer' : 'inactive timer'
     return(
-      <div className="repo col-md-8 col-md-offset-2">
-        <div className="col-md-8 info">
-          <h3>{this.props.name}</h3>
-          <a href={this.props.url}>Link</a>
+      <div className="repo col-md-6 col-md-offset-3">
+        <div className="col-md-9 info">
+
+          <a href={this.props.url}><h3>{this.props.name}</h3></a>
         </div>
-        <div className="col-md-4 toggle">
-          <div className="timer">{this.state.time}</div>
-          <button className="" onClick={this.toggleTime.bind(this)}>
-            Turn {this.state.toggle ? 'off' : 'on'}
-          </button>
+        <div className="col-md-3 toggle">
+          <div className={timerClasses} onClick={this.toggleTime.bind(this)}><span>{this.state.time}</span></div>
         </div>
       </div>
     )
