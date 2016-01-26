@@ -44,11 +44,6 @@ body {
   margin-bottom: 25px;
   transition: all .5s;
 }
-.repo:hover {
-  -webkit-box-shadow: 1px 1px 5px #2C3E50;
-  -moz-box-shadow: 1px 1px 5px #2C3E50;
-  box-shadow: 1px 1px 5px #2C3E50;
-}
 .repo .info {
   padding: 25px 0px;
 }
@@ -121,7 +116,7 @@ body {
 }
 @media (max-width: 768px) {
   .repo .info h3 {
-    padding: 10px 0 25px 0;
+    padding: 0;
     text-align: center;
   }
   .repo .toggle .timer {
