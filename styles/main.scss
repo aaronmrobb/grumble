@@ -6,6 +6,8 @@ $green : #2ecc71;
 $darkGreen: #27AE60;
 $greyBlue: #34495E;
 $darkGreyBlue: #2C3E50;
+$breakpoint-tablet: 768px;
+
 
 @mixin box-shadow($top, $left, $blur, $color, $inset: false) {
   @if $inset {
@@ -66,7 +68,7 @@ body {
   margin-bottom: 25px;
   .info {
     h3{
-      line-height: 75px;
+      padding: 25px 0px;
       margin: 0;
       font-size: 2.2rem;
       text-transform: uppercase;
@@ -112,6 +114,19 @@ body {
 
 }
 
+.loader {
+  .btn  {
+    margin:auto;
+    background-color: $blue;
+    border: none;
+    color: white;
+    &:hover {
+      background-color: $darkBlue;
+
+    }
+  }
+}
+
 .center {
   margin: auto;
 }
@@ -119,13 +134,33 @@ body {
 
 @-webkit-keyframes pulsate {
     0% {
-      background-color: $green;
+      background-color: $darkGreyBlue;
+
     }
     50% {
-      background-color: $darkGreen;
+      background-color: $darkBlue;
+
     }
     100% {
-      background-color: $green;
+      background-color: $darkGreyBlue;
     }
 
+}
+
+
+@media (max-width: $breakpoint-tablet) {
+  .repo{
+    .info {
+      h3 {
+        padding: 10px 0 25px 0;
+        text-align: center;
+      }
+    }
+    .toggle {
+      .timer{
+        margin: 0 auto 20px auto;
+
+      }
+    }
+  }
 }

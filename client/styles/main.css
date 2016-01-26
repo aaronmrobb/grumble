@@ -41,7 +41,7 @@ body {
   margin-bottom: 25px;
 }
 .repo .info h3 {
-  line-height: 75px;
+  padding: 25px 0px;
   margin: 0;
   font-size: 2.2rem;
   text-transform: uppercase;
@@ -78,19 +78,38 @@ body {
   background-color: #2ecc71;
 }
 
+.loader .btn {
+  margin: auto;
+  background-color: #3498db;
+  border: none;
+  color: white;
+}
+.loader .btn:hover {
+  background-color: #2980B9;
+}
+
 .center {
   margin: auto;
 }
 
 @-webkit-keyframes pulsate {
   0% {
-    background-color: #2ecc71;
+    background-color: #2C3E50;
   }
   50% {
-    background-color: #27AE60;
+    background-color: #2980B9;
   }
   100% {
-    background-color: #2ecc71;
+    background-color: #2C3E50;
+  }
+}
+@media (max-width: 768px) {
+  .repo .info h3 {
+    padding: 10px 0 25px 0;
+    text-align: center;
+  }
+  .repo .toggle .timer {
+    margin: 0 auto 20px auto;
   }
 }
 
