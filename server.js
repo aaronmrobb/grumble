@@ -6,7 +6,6 @@ const FirebaseTokenGenerator = require("firebase-token-generator")
 const router = require('koa-router')()
 const serve = require('koa-static')
 const app = koa()
-const thunkify = require('thunkify-wrap')
 const port =  process.env.PORT || 5000
 const server = require('http').createServer(app.callback()).listen(port)
 const dotenv = require('dotenv')

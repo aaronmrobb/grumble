@@ -36,19 +36,32 @@ body {
 }
 
 .repo {
+  -webkit-box-shadow: 1px 1px 5px #bdc3c7;
+  -moz-box-shadow: 1px 1px 5px #bdc3c7;
+  box-shadow: 1px 1px 5px #bdc3c7;
   background-color: #F5F5F5;
   padding: 10px 15px;
   margin-bottom: 25px;
+  transition: all .5s;
 }
-.repo .info h3 {
+.repo:hover {
+  -webkit-box-shadow: 1px 1px 5px #2C3E50;
+  -moz-box-shadow: 1px 1px 5px #2C3E50;
+  box-shadow: 1px 1px 5px #2C3E50;
+}
+.repo .info {
   padding: 25px 0px;
+}
+.repo .info a:hover {
+  text-decoration: none;
+}
+.repo .info a h3 {
   margin: 0;
   font-size: 2.2rem;
   text-transform: uppercase;
   color: #3498db;
 }
-.repo .info h3:hover {
-  text-decoration: none;
+.repo .info a h3:hover {
   color: #2980B9;
 }
 .repo .toggle .timer {
@@ -72,6 +85,9 @@ body {
 .repo .toggle .inactive {
   background-color: #2C3E50;
 }
+.repo .toggle .inactive:hover {
+  background-color: #2980B9;
+}
 .repo .toggle .active {
   -webkit-animation: pulsate 1s ease-out;
   -webkit-animation-iteration-count: infinite;
@@ -79,7 +95,7 @@ body {
 }
 
 .loader .btn {
-  margin: auto;
+  margin: 25px auto 100px auto;
   background-color: #3498db;
   border: none;
   color: white;
@@ -94,13 +110,13 @@ body {
 
 @-webkit-keyframes pulsate {
   0% {
-    background-color: #2C3E50;
-  }
-  50% {
     background-color: #2980B9;
   }
-  100% {
+  50% {
     background-color: #2C3E50;
+  }
+  100% {
+    background-color: #2980B9;
   }
 }
 @media (max-width: 768px) {
