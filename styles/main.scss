@@ -99,9 +99,29 @@ body {
       background-color: $darkGreyBlue;
     }
     .active {
+      -webkit-animation: pulsate 1s ease-out;
+      -webkit-animation-iteration-count: infinite;
       background-color: $green;
     }
 
   }
+
+}
+
+.center {
+  margin: auto;
+}
+
+
+@-webkit-keyframes pulsate {
+    0% {
+      background-color: $green;
+    }
+    50% {
+      background-color: $darkGreen;
+    }
+    100% {
+      background-color: $green;
+    }
 
 }

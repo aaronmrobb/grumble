@@ -125,7 +125,7 @@ class Projects extends Component {
   getRepos() {
     $.get('http://localhost:5000/users/' + this.props.user + '/' + this.props.username, (data) => {
       this.setState({
-        repos: this.convertRepos(data.projects)
+        repos: this.orderRepos(this.convertRepos(data.projects))
       })
     })
   }
@@ -145,8 +145,8 @@ class Projects extends Component {
     }
     return repos
   }
-  orderRepos() {
-    const { repos } = this.state
+  orderRepos(repos) {
+    console.log(repos)
     const mostRecent = R.sort((a, b) => {
       return b.updatedAt - a.updatedAt
     }, repos)
@@ -162,9 +162,9 @@ class Projects extends Component {
   }
   render() {
     const { user, username } = this.props
+    const { repos } = this.state
     const repoCards = []
-    if(this.state.repos.length > 0){
-      const repos = this.orderRepos()
+    if(repos.length > 0){
       repos.map((repo) => {
         repoCards.push(<Repo name={repo.name} url={repo.url} key={repo.key}
           hash={repo.key} time={repo.time} user={user} username={username}

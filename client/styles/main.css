@@ -69,7 +69,25 @@ body {
   background-color: #2C3E50;
 }
 .repo .toggle .active {
+  -webkit-animation: pulsate 1s ease-out;
+  -webkit-animation-iteration-count: infinite;
   background-color: #2ecc71;
+}
+
+.center {
+  margin: auto;
+}
+
+@-webkit-keyframes pulsate {
+  0% {
+    background-color: #2ecc71;
+  }
+  50% {
+    background-color: #27AE60;
+  }
+  100% {
+    background-color: #2ecc71;
+  }
 }
 
 /*# sourceMappingURL=main.css.map */
