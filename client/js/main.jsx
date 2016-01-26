@@ -54,12 +54,7 @@ class Navigation extends Component {
             <a className="navbar-brand">
               Grumble
             </a>
-          </div>
-          <div className="navbar-collapse">
-            <ul className="nav navbar-nav">
-              <li></li>
-            </ul>
-            <div className="navbar-right">
+            <div className="sign-in">
               <Signin updateUser={this.props.updateUser} user={this.props.user} username={this.props.username}/>
             </div>
           </div>

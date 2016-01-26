@@ -8,6 +8,9 @@ body {
   border-radius: 0px;
   background-color: #2C3E50;
 }
+.navbar .navbar-header {
+  width: 100%;
+}
 .navbar .navbar-brand {
   font-weight: bold;
   letter-spacing: 1px;
@@ -18,16 +21,17 @@ body {
   color: white;
   letter-spacing: 3px;
 }
-.navbar .navbar-right {
-  padding: 10px;
+.navbar .sign-in {
+  float: right;
+  padding: 10px 0;
 }
-.navbar .navbar-right .btn {
+.navbar .sign-in .btn {
   margin: 0 15px;
   background-color: #3498db;
   border: none;
   color: white;
 }
-.navbar .navbar-right .btn:hover {
+.navbar .sign-in .btn:hover {
   background-color: #2980B9;
 }
 
