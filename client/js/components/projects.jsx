@@ -25,7 +25,7 @@ class Projects extends Component {
     }
   }
   getRepos() {
-    $.get('https://mighty-woodland-92895.herokuapp.com/users/' + this.props.user + '/' + this.props.username, (data) => {
+    $.get('/users/' + this.props.user + '/' + this.props.username, (data) => {
       this.setState({
         repos: this.orderRepos(this.convertRepos(data.projects))
       })
