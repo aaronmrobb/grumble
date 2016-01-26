@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import R from 'ramda'
-import Repo from './repo.jsx!'
+import Repo from './repo.jsx'
+import $ from 'jquery'
+
 
 class Projects extends Component {
   constructor(props) {

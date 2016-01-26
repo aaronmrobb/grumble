@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Firebase from 'firebase'
 
 
 class Signin extends Component {

@@ -1,16 +1,15 @@
 'use strict'
-import $ from 'jquery'
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import Firebase from 'firebase'
-import Navigation from './components/navigation.jsx!'
-import Projects from './components/projects.jsx!'
+import Navigation from './components/navigation.jsx'
+import Projects from './components/projects.jsx'
 
 
 const mountNode = document.getElementById('app')
 
 
-class Main extends Component {
+class App extends Component {
   constructor(props){
     super(props)
     this.state = {
@@ -48,4 +47,4 @@ class Main extends Component {
 
 
 
-ReactDOM.render(<Main />, mountNode)
+ReactDOM.render(<App />, mountNode)
