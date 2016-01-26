@@ -14,8 +14,11 @@ const R = require('ramda')
 dotenv.load()
 
 
+
 const userData = new Firenext('https://grumble.firebaseio.com/users/')
 const tokenGenerator = new FirebaseTokenGenerator(process.env.FIREBASE_SECRET)
+
+console.log('Sup')
 
 app.use(koaBody({
   extendTypes: {
