@@ -20238,7 +20238,7 @@
 	    value: function getRepos() {
 	      var _this2 = this;
 
-	      _jquery2.default.get('http://localhost:5000/users/' + this.props.user + '/' + this.props.username, function (data) {
+	      _jquery2.default.get('https://mighty-woodland-92895.herokuapp.com/' + this.props.user + '/' + this.props.username, function (data) {
 	        _this2.setState({
 	          repos: _this2.orderRepos(_this2.convertRepos(data.projects))
 	        });
@@ -28836,7 +28836,7 @@
 	      var time = this.state.time;
 
 	      _jquery2.default.ajax({
-	        url: "http://localhost:5000/users/" + user + "/" + hash,
+	        url: "https://mighty-woodland-92895.herokuapp.com/users/" + user + "/" + hash,
 	        type: 'PATCH',
 	        data: { name: name,
 	          time: time,
