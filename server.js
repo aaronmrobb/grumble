@@ -1,7 +1,7 @@
 'use strict'
 const koa = require('koa')
 const koaBody = require('koa-better-body')
-const Firenext = require('Firenext')
+const Firenext = require('firenext')
 const FirebaseTokenGenerator = require("firebase-token-generator")
 const router = require('koa-router')()
 const serve = require('koa-static')
