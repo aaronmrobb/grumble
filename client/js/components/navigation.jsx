@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Signin from './signin.jsx!'
+import Signin from './signin.jsx'
 
 class Navigation extends Component {
   constructor(props){
