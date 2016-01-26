@@ -20238,7 +20238,7 @@
 	    value: function getRepos() {
 	      var _this2 = this;
 
-	      _jquery2.default.get('https://mighty-woodland-92895.herokuapp.com/' + this.props.user + '/' + this.props.username, function (data) {
+	      _jquery2.default.get('https://mighty-woodland-92895.herokuapp.com/users/' + this.props.user + '/' + this.props.username, function (data) {
 	        _this2.setState({
 	          repos: _this2.orderRepos(_this2.convertRepos(data.projects))
 	        });
