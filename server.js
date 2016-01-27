@@ -113,9 +113,7 @@ function *updateRepos(userId, data) {
   }).exec()
 }
 
-app.use(function *(){
-  this.set('Access-Control-Allow-Origin', '*');
-});
+app.use(cors(['GET', 'POST', 'PATCH']))
 
 app.use(router.routes())
 
