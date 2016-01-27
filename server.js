@@ -115,7 +115,7 @@ function *updateRepos(userId, data) {
 }
 
 const options = {
-    origin: 'https://grumble.firebaseapp.com/',
+    origin: 'https://grumble.firebaseapp.com',
     methods: ['GET', 'POST', 'PATCH']
 }
 app.use(cors(options))
