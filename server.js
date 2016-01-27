@@ -28,7 +28,7 @@ app.use(koaBody({
   }
 }))
 app.use(function *(){
-  this.set('Access-Control-Allow-Origin', 'https://grumble.firebaseapp.com/');
+  this.set('Access-Control-Allow-Origin', 'https://grumble.firebaseapp.com');
 });
 app.use(serve(__dirname + '/client'))
 
