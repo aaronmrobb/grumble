@@ -1,6 +1,7 @@
 'use strict'
 const koa = require('koa')
 const koaBody = require('koa-better-body')
+const cors = require('koa-cors')
 const Firenext = require('firenext')
 const FirebaseTokenGenerator = require("firebase-token-generator")
 const router = require('koa-router')()
@@ -18,7 +19,6 @@ dotenv.load()
 const userData = new Firenext('https://grumble.firebaseio.com/users/')
 const tokenGenerator = new FirebaseTokenGenerator(process.env.FIREBASE_SECRET)
 
-console.log('Sup')
 
 app.use(koaBody({
   extendTypes: {
@@ -113,6 +113,9 @@ function *updateRepos(userId, data) {
   }).exec()
 }
 
+app.use(cors())
 
 app.use(router.routes())
+
+
 console.log('Listening on ' + port)
