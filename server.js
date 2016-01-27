@@ -27,9 +27,7 @@ app.use(koaBody({
     multipart: ['multipart/mixed']
   }
 }))
-app.use(function *(){
-  this.set('Access-Control-Allow-Origin', 'https://grumble.firebaseapp.com');
-});
+
 app.use(serve(__dirname + '/client'))
 
 router.get('/users/:id/:username', function *(next) {
