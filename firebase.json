@@ -1,0 +1,9 @@
+{
+  "firebase": "grumble",
+  "public": "client",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}
