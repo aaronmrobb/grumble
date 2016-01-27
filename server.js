@@ -114,7 +114,7 @@ function *updateRepos(userId, data) {
 }
 
 app.use(function *(){
-  this.set('Access-Control-Allow-Origin', 'https://grumble.firebaseapp.com');
+  this.set('Access-Control-Allow-Origin', '*');
 });
 
 app.use(router.routes())
