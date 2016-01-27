@@ -113,7 +113,11 @@ function *updateRepos(userId, data) {
   }).exec()
 }
 
-app.use(cors(['GET', 'POST', 'PATCH']))
+const options = {
+    origin: 'https://grumble.firebaseapp.com/',
+    methods: ['GET', 'POST', 'PATCH']
+}
+app.use(cors(options))
 
 app.use(router.routes())
 
