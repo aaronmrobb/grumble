@@ -18,7 +18,7 @@ class Repo extends Component {
     const { user, name, url, hash } = this.props
     const { time } = this.state
     $.ajax({
-      url: "/users/" + user + "/" + hash,
+      url: "https://grumbled.herokuapp.com/users/" + user + "/" + hash,
       type: 'PATCH',
       data: {   name: name,
           time: time,
